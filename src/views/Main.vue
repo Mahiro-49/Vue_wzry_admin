@@ -2,7 +2,7 @@
   <div>
     <el-container style="height: 100vh">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu router :default-openeds="['1']" :default-active="$route.path">
+        <el-menu router :default-openeds="['1', '2']" :default-active="$route.path">
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-message"></i>内容管理
@@ -54,7 +54,7 @@
 
       <el-container>
         <el-main>
-          <router-view />
+          <router-view :key="$route.path" />
         </el-main>
       </el-container>
     </el-container>
