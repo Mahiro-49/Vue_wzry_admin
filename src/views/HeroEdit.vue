@@ -121,6 +121,35 @@
           </el-row>
         </el-tab-pane>
 
+        <el-tab-pane label="召唤师技能" name="playerSkills">
+          <el-button @click="model.playerSkills.push({})">
+            <i class="el-icon-plus"></i> 添加技能
+          </el-button>
+          <el-row type="flex" style="flex-wrap: wrap">
+            <el-col :md="12" v-for="(item, index) in model.playerSkills" :key="index">
+              <el-form-item label="名称:" style="margin-top: 2rem">
+                <el-input v-model="item.name" placeholder="请输入内容"></el-input>
+              </el-form-item>
+              <el-form-item label="图标:">
+                <el-upload
+                  class="avatar-uploader"
+                  :action="$http.defaults.baseURL + '/upload'"
+                  :headers="getAuthHeaders()"
+                  :show-file-list="false"
+                  :on-success="res => $set(item, 'icon', res.url)"
+                >
+                  <img v-if="item.icon" :src="item.icon" class="avatar" />
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+              </el-form-item>
+              <el-form-item>
+                <el-button @click="model.playerSkills.splice(index, 1)" type="danger" size="mini">删除</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
+        
+
         <el-tab-pane label="最佳搭档" name="partners">
           <el-button @click="model.partners.push({})">
             <i class="el-icon-plus"></i> 添加英雄
@@ -145,6 +174,58 @@
             </el-col>
           </el-row>
         </el-tab-pane>
+
+        <el-tab-pane label="被谁克制" name="restrainted">
+          <el-button @click="model.restrainted.push({})">
+            <i class="el-icon-plus"></i> 添加英雄
+          </el-button>
+          <el-row type="flex" style="flex-wrap: wrap">
+            <el-col :md="12" v-for="(item, index) in model.restrainted" :key="index">
+              <el-form-item label="英雄:" style="margin-top: 2rem">
+                <el-select filterable v-model="item.hero" placeholder="请输入内容">
+                  <el-option v-for="hero in heroes" 
+                             :key="hero._id" 
+                             :value="hero._id" 
+                             :label="hero.name">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="描述:">
+                <el-input v-model="item.description" type="textarea"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button @click="model.restrainted.splice(index, 1)" type="danger" size="mini">删除</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
+
+        <el-tab-pane label="克制谁" name="restraint">
+          <el-button @click="model.restraint.push({})">
+            <i class="el-icon-plus"></i> 添加英雄
+          </el-button>
+          <el-row type="flex" style="flex-wrap: wrap">
+            <el-col :md="12" v-for="(item, index) in model.restraint" :key="index">
+              <el-form-item label="英雄:" style="margin-top: 2rem">
+                <el-select filterable v-model="item.hero" placeholder="请输入内容">
+                  <el-option v-for="hero in heroes" 
+                             :key="hero._id" 
+                             :value="hero._id" 
+                             :label="hero.name">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="描述:">
+                <el-input v-model="item.description" type="textarea"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button @click="model.restraint.splice(index, 1)" type="danger" size="mini">删除</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
+
+
       </el-tabs>
 
       <el-form-item class="button">
